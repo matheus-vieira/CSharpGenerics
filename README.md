@@ -2,8 +2,41 @@
 
 CSharpGenerics
 
+## Testando o projeto
 
-Adicione uma string de conexão válida e confira o provider do Entity Framework Core
+Confira o provider do Entity Framework Core
+
+Adicione uma string de conexão válida no arquivo: `Data\ApplicationDbContext.cs`, na linha 29:
+
+```csharp
+var conn = "User ID=userId;Password=password;Host=host;Port=5432;Database=iqgwobhu;Pooling=true;";
+```
+
+Após isso replique a string de conexão no arquivo `appsettings.json`
+
+```json{
+  "ConnectionStrings": {
+    "DefaultConnection": "User ID=userId;Password=password;Host=host;Port=5432;Database=iqgwobhu;Pooling=true;"
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  }
+}
+```
+
+Ou utilize o gerenciador de segredos (botão direito no projeto web > Manage User Secrets)
+
+```json{
+  "ConnectionStrings": {
+    "DefaultConnection": "User ID=userId;Password=password;Host=host;Port=5432;Database=iqgwobhu;Pooling=true;"
+  }
+}
+```
+
+Após execute o comando Update-Database
 
 Se quiser utilizar esse projeto como base para o seu próprio faça o seguinte:
 
