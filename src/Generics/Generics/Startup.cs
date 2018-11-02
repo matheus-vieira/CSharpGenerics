@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Generics.Data;
-using Generics.Models;
-using Generics.Services;
-using Generics.Services.Email;
-using Generics.Services.Generic;
-using Generics.Services.Product;
 
 namespace Generics
 {
@@ -29,22 +19,22 @@ namespace Generics
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<Data.ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            services.AddIdentity<Models.ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<Data.ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<Services.Email.IEmailSender, Services.Email.EmailSender>();
 
             // Add generic service
             services.AddScoped(typeof(Services.Generic.IGenericService<>), typeof(Services.Generic.GenericService<>));
 
 
-            // Add specific service from generic
-            services.AddScoped<IGenericService<Models.Ecommerce.Product>, ProductService>();
+            // Add specific service from that's extends from generic service
+            services.AddScoped<Services.Category.ICategoryService, Services.Category.CategoryService>();
 
             services.AddMvc();
         }

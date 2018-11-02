@@ -1,7 +1,11 @@
-﻿namespace Generics.Controllers
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Generics.Controllers
 {
-    public class ProductsController : GenericController<Models.Ecommerce.Product>
+    public class ProductsController : GenericController<Models.Ecommerce.Product, long?>
     {
+        private readonly Services.Generic.IGenericService<Models.Ecommerce.Product> _service;
         private readonly Services.Generic.IGenericService<Models.Ecommerce.Category> _categoryService;
         private readonly Services.Generic.IGenericService<Models.Ecommerce.Supplier> _supplierService;
 
@@ -12,6 +16,7 @@
             )
             : base(service)
         {
+            _service = service;
             _categoryService = categoryService;
             _supplierService = supplierService;
         }

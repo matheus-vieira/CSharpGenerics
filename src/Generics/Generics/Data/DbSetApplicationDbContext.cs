@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Generics.Data
 {
-    public partial class DbSetApplicationDbContext
+    public partial class ApplicationDbContext
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }

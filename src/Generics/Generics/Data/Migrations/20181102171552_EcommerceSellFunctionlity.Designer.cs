@@ -11,8 +11,8 @@ using System;
 namespace Generics.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181101140912_EcommerceSellFunctionality")]
-    partial class EcommerceSellFunctionality
+    [Migration("20181102171552_EcommerceSellFunctionlity")]
+    partial class EcommerceSellFunctionlity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,6 +69,100 @@ namespace Generics.Data.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Generics.Models.Ecommerce.Category", b =>
+                {
+                    b.Property<long?>("CategoryId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Generics.Models.Ecommerce.Product", b =>
+                {
+                    b.Property<long?>("ProductId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("CategoryId");
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<string>("Name");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<long?>("SupplierId");
+
+                    b.HasKey("ProductId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Generics.Models.Ecommerce.Sell", b =>
+                {
+                    b.Property<long?>("SellId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BuyerDoc");
+
+                    b.Property<string>("BuyerName");
+
+                    b.Property<bool>("Closed");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<long?>("SellNumber");
+
+                    b.Property<decimal>("TotalPrice");
+
+                    b.HasKey("SellId");
+
+                    b.ToTable("Sells");
+                });
+
+            modelBuilder.Entity("Generics.Models.Ecommerce.SellItem", b =>
+                {
+                    b.Property<long?>("SellItemId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("ProductId");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<long?>("SellId");
+
+                    b.Property<decimal>("UnitPrice");
+
+                    b.HasKey("SellItemId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SellId");
+
+                    b.ToTable("SellItems");
+                });
+
+            modelBuilder.Entity("Generics.Models.Ecommerce.Supplier", b =>
+                {
+                    b.Property<long?>("SupplierId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("SupplierId");
+
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -176,6 +270,28 @@ namespace Generics.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Generics.Models.Ecommerce.Product", b =>
+                {
+                    b.HasOne("Generics.Models.Ecommerce.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("Generics.Models.Ecommerce.Supplier", "Supplier")
+                        .WithMany("Products")
+                        .HasForeignKey("SupplierId");
+                });
+
+            modelBuilder.Entity("Generics.Models.Ecommerce.SellItem", b =>
+                {
+                    b.HasOne("Generics.Models.Ecommerce.Product", "Product")
+                        .WithMany("SellItems")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("Generics.Models.Ecommerce.Sell", "Sell")
+                        .WithMany("SellItems")
+                        .HasForeignKey("SellId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,20 +1,25 @@
-﻿using Generics.Data;
-using Generics.Models.Ecommerce;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Generics.Controllers
 {
-    public class CategoriesController : GenericController<Category>
+    public class CategoriesController : GenericController<Models.Ecommerce.Category, long?>
     {
-        public CategoriesController(
-            Services.Generic.IGenericService<Category> service
-            )
+        private readonly Services.Category.ICategoryService _service;
+
+        public CategoriesController(Services.Category.ICategoryService service)
             : base(service)
         {
+            _service = service;
+        }
+
+        // Probably this coud be refactor to the generic controller
+        // But for example I'll keep here
+        public async Task<IActionResult> Filter(string name)
+        {
+            var list = await _service.GetAllAsync(name);
+            ViewData["FilterName"] = name;
+            return View(nameof(Index), list);
         }
     }
 }
