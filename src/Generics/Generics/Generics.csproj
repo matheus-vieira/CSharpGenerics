@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-Generics-F8DCD94B-9432-4AC9-87F7-8A669BD41E30</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20181103204743_ChangePriceInformationRange.cs" />
+    <Compile Remove="Data\Migrations\20181103204743_ChangePriceInformationRange.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />

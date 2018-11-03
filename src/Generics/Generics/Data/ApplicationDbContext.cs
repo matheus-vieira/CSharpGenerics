@@ -26,7 +26,7 @@ namespace Generics.Data
         {
             {
                 var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                var conn = "User ID=userId;Password=password;Host=host;Port=5432;Database=iqgwobhu;Pooling=true;";
+                var conn = "User ID=iqgwobhu;Password=QSBrtXnK1-BJ_5avaujaQPlTQrZ9Tw3y;Host=stampy.db.elephantsql.com;Port=5432;Database=iqgwobhu;Pooling=true;";
                 optionsBuilder.UseNpgsql(conn);
                 return new ApplicationDbContext(optionsBuilder.Options);
             }

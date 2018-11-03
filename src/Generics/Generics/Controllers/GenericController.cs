@@ -75,7 +75,10 @@
         public virtual async System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Edit(Tkey id, TEntity resource)
         {
             if (!ModelState.IsValid)
+            {
+                await AddViewDataAsync(resource);
                 return View(resource);
+            }
 
             try
             {

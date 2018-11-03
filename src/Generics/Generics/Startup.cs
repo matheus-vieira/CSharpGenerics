@@ -32,11 +32,20 @@ namespace Generics
             // Add generic service
             services.AddScoped(typeof(Services.Generic.IGenericService<>), typeof(Services.Generic.GenericService<>));
 
-
             // Add specific service from that's extends from generic service
-            services.AddScoped<Services.Category.ICategoryService, Services.Category.CategoryService>();
+            AddCustomServices(services);
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(
+                    options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
+        }
+
+        private void AddCustomServices(IServiceCollection services)
+        {
+            services.AddScoped<Services.Category.ICategoryService, Services.Category.CategoryService>();
+            services.AddScoped<Services.Product.IProductService, Services.Product.ProductService>();
+            services.AddScoped<Services.Supplier.ISupplierService, Services.Supplier.SupplierService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

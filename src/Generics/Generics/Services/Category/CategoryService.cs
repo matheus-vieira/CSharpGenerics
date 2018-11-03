@@ -12,10 +12,10 @@ namespace Generics.Services.Category
         {
         }
 
-        public async Task<IEnumerable<Models.Ecommerce.Category>> GetAllAsync(string name)
+        public async Task<IEnumerable<Models.Ecommerce.Category>> GetAllAsync(Models.Filter.CategoryFilter filter)
         {
             var query = DbSet
-                .Where(p => string.IsNullOrWhiteSpace(name) || p.Name.ToLower().Contains(name.ToLower()));
+                .Where(p => string.IsNullOrWhiteSpace(filter.Name) || p.Name.ToLower().Contains(filter.Name.ToLower()));
             return await query.ToListAsync();
         }
     }

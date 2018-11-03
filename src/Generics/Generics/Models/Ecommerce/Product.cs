@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Generics.Models.Ecommerce
 {
@@ -7,8 +8,9 @@ namespace Generics.Models.Ecommerce
     {
         public long? ProductId { get; set; }
         public string Name { get; set; }
+        [Range(1, 100000)]
         [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = false)]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
         public bool Deleted { get; set; }
         public long? CategoryId { get; set; }

@@ -15,10 +15,10 @@ namespace Generics.Controllers
 
         // Probably this coud be refactor to the generic controller
         // But for example I'll keep here
-        public async Task<IActionResult> Filter(string name)
+        public async Task<IActionResult> Filter(Models.Filter.CategoryFilter filter)
         {
-            var list = await _service.GetAllAsync(name);
-            ViewData["FilterName"] = name;
+            filter.AddViewData(ViewData);
+            var list = await _service.GetAllAsync(filter);
             return View(nameof(Index), list);
         }
     }
