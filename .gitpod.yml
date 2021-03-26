@@ -1,2 +1,6 @@
 # The Docker image to run your workspace in. Defaults to gitpod/workspace-full
-image: image: gitpod/workspace-dotnet-vnc
+image: gitpod/workspace-dotnet-vnc
+
+tasks:
+  - init: dotnet build
+    command: dotnet run
